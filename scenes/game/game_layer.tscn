@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://c772yqti655jr"]
+
+[ext_resource type="Texture2D" uid="uid://n0asfipq1rbg" path="res://textures/sprites/checkered_bg.png" id="1_jaybc"]
+[ext_resource type="Texture2D" uid="uid://43ixlop683c" path="res://textures/sprites/astronaut.png" id="1_tinvi"]
+[ext_resource type="Script" uid="uid://b5dssc4fioa5r" path="res://scripts/core/procgen/wfc/wfc_generator.gd" id="2_gy8d5"]
+[ext_resource type="Texture2D" uid="uid://75ay4lkn4u7l" path="res://textures/default_point_light_texture.png" id="2_qnsk6"]
+[ext_resource type="Resource" uid="uid://beau7jkmspk5d" path="res://data/tile_collections/test.tres" id="3_lsyhs"]
+[ext_resource type="Script" uid="uid://w27m13teraie" path="res://scripts/game/astronaut.gd" id="3_rymbd"]
+[ext_resource type="Script" uid="uid://bxyd1d5e8fdb1" path="res://scripts/map/tile_renderer.gd" id="4_gqj74"]
+[ext_resource type="Script" uid="uid://dvsu4kgpgqnbi" path="res://scripts/core/dependency/object_registrar.gd" id="4_ng082"]
+[ext_resource type="Script" uid="uid://bb46t1ojbtf3w" path="res://scripts/core/procgen/wfc/wfc_rule.gd" id="4_u2itj"]
+[ext_resource type="Script" uid="uid://oypl38q2ef0g" path="res://scripts/core/procgen/wfc/rules/wfc_rule_always.gd" id="5_qnsk6"]
+[ext_resource type="Script" uid="uid://btqxkq751taka" path="res://scripts/core/procgen/wfc/rules/wfc_tile_collection.gd" id="6_jaybc"]
+[ext_resource type="Script" uid="uid://c651a1a8nryga" path="res://scripts/core/procgen/wfc/wfc_tile.gd" id="7_043ve"]
+[ext_resource type="Resource" uid="uid://kwl4lksdt8t2" path="res://data/tiles/nothing.tres" id="8_x5c4o"]
+[ext_resource type="Shader" uid="uid://0e17q838h77t" path="res://shaders/general/lut.gdshader" id="12_x5c4o"]
+[ext_resource type="Texture2D" uid="uid://47jpq0irip02" path="res://textures/washed_lut.png" id="13_hth3n"]
+[ext_resource type="PackedScene" uid="uid://bshfmhsfv2vv4" path="res://scenes/ui/ui_layer.tscn" id="14_hth3n"]
+[ext_resource type="Script" uid="uid://d4cxshwu0xg0t" path="res://scripts/game/game_manager.gd" id="15_g8qi1"]
+
+[sub_resource type="Resource" id="Resource_u2itj"]
+script = ExtResource("6_jaybc")
+tiles = Array[ExtResource("7_043ve")]([ExtResource("8_x5c4o")])
+metadata/_custom_type_script = "uid://btqxkq751taka"
+
+[sub_resource type="Resource" id="Resource_qnsk6"]
+script = ExtResource("5_qnsk6")
+collection = SubResource("Resource_u2itj")
+metadata/_custom_type_script = "uid://oypl38q2ef0g"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8qi1"]
+shader = ExtResource("12_x5c4o")
+shader_parameter/lut = ExtResource("13_hth3n")
+shader_parameter/lut_size = 16.0
+
+[node name="GameLayer" type="Node2D" unique_id=465470149]
+
+[node name="BGLayer" type="CanvasLayer" parent="." unique_id=1672830088]
+layer = -1
+
+[node name="DarkBG" type="CanvasModulate" parent="BGLayer" unique_id=1710968147]
+color = Color(0.019607844, 0.007843138, 0.039215688, 1)
+
+[node name="BGLight" type="PointLight2D" parent="BGLayer" unique_id=1174729864]
+position = Vector2(960, 444)
+color = Color(1, 0.6, 1, 1)
+energy = 2.0
+range_layer_min = -1
+range_layer_max = -1
+texture = ExtResource("2_qnsk6")
+texture_scale = 8.0
+
+[node name="CheckeredBG" type="Sprite2D" parent="BGLayer" unique_id=590837409]
+texture_filter = 1
+position = Vector2(960, 540)
+texture = ExtResource("1_jaybc")
+region_enabled = true
+region_rect = Rect2(0, 0, 1920, 1080)
+
+[node name="AmbientLight" type="CanvasModulate" parent="." unique_id=319469906]
+color = Color(0.019607844, 0.007843138, 0.039215688, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2062405211]
+position = Vector2(0, 128)
+
+[node name="RegisterMainCamera" type="Node" parent="Camera2D" unique_id=1642882731 node_paths=PackedStringArray("object")]
+script = ExtResource("4_ng082")
+object = NodePath("..")
+registry_name = "main_camera"
+world = true
+metadata/_custom_type_script = "uid://dvsu4kgpgqnbi"
+
+[node name="WfcGenerator" type="Node" parent="." unique_id=2142547466]
+script = ExtResource("2_gy8d5")
+all_tiles = ExtResource("3_lsyhs")
+pos_rules = Dictionary[Vector2i, ExtResource("4_u2itj")]({
+Vector2i(0, 0): SubResource("Resource_qnsk6")
+})
+grid_size = Vector2i(7, 7)
+starting_pos = Vector2i(-3, -3)
+debug = true
+seed_by_pos = true
+initial_seed_by_pos = 12
+metadata/_custom_type_script = "uid://b5dssc4fioa5r"
+
+[node name="TileRenderer" type="Node2D" parent="." unique_id=2111245563 node_paths=PackedStringArray("debug_generator")]
+script = ExtResource("4_gqj74")
+debug = true
+debug_generator = NodePath("../WfcGenerator")
+metadata/_custom_type_script = "uid://bxyd1d5e8fdb1"
+
+[node name="Astronaut" type="Node2D" parent="." unique_id=1714985102]
+script = ExtResource("3_rymbd")
+metadata/_custom_type_script = "uid://w27m13teraie"
+
+[node name="Sprite" type="Sprite2D" parent="Astronaut" unique_id=601561374]
+position = Vector2(0, 24)
+texture = ExtResource("1_tinvi")
+
+[node name="PointLight2D" type="PointLight2D" parent="Astronaut/Sprite" unique_id=216843016]
+texture = ExtResource("2_qnsk6")
+texture_scale = 8.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=930054684]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=948357629]
+material = SubResource("ShaderMaterial_g8qi1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UILayer" parent="." unique_id=420124059 instance=ExtResource("14_hth3n")]
+
+[node name="GameManager" type="Node" parent="." unique_id=1471174998]
+script = ExtResource("15_g8qi1")
+metadata/_custom_type_script = "uid://d4cxshwu0xg0t"

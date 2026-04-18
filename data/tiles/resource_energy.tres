@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WfcTile" format=3 uid="uid://qega27842yta"]
+
+[ext_resource type="Script" uid="uid://c651a1a8nryga" path="res://scripts/core/procgen/wfc/wfc_tile.gd" id="1_d3rob"]
+
+[resource]
+script = ExtResource("1_d3rob")
+tile_name = "tile_resource_energy"
+metadata/_custom_type_script = "uid://c651a1a8nryga"

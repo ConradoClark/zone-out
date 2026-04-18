@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://ba582i1ba3kq8"]
+
+[ext_resource type="Script" uid="uid://b6t2n0sgbssh3" path="res://scripts/ui/highlighter_widget.gd" id="1_uotoh"]
+[ext_resource type="Texture2D" uid="uid://f540u6mf70dw" path="res://textures/sprites/move_highlight.png" id="1_x6ptl"]
+[ext_resource type="Script" uid="uid://di4dkxsfw6fxr" path="res://scripts/core/effects/executors/tween_executor.gd" id="2_rfvwg"]
+[ext_resource type="Script" uid="uid://dk0guwvvdagde" path="res://scripts/core/effects/effector.gd" id="3_3g1c0"]
+[ext_resource type="Script" uid="uid://bmyl4k3kw2h0d" path="res://scripts/core/effects/effectors/visibility_alpha_effector.gd" id="4_uotoh"]
+[ext_resource type="Texture2D" uid="uid://cdsjbu1kxpcqx" path="res://textures/sprites/selected_highlight.png" id="5_3g1c0"]
+[ext_resource type="Script" uid="uid://bncyqf7uw7s0m" path="res://scripts/core/effects/effectors/uniform_scale_effector.gd" id="7_xmwuh"]
+[ext_resource type="Script" uid="uid://dv1uhigt6d8ao" path="res://scripts/core/effects/effectors/rotation_degrees_effector.gd" id="8_1wsm1"]
+
+[sub_resource type="Resource" id="Resource_xmwuh"]
+script = ExtResource("4_uotoh")
+alpha_on_zero = 0.2
+alpha_on_one = 0.5
+metadata/_custom_type_script = "uid://bmyl4k3kw2h0d"
+
+[sub_resource type="Resource" id="Resource_1wsm1"]
+script = ExtResource("7_xmwuh")
+scale_on_zero = 1.0
+scale_on_one = 1.35
+metadata/_custom_type_script = "uid://bncyqf7uw7s0m"
+
+[sub_resource type="Resource" id="Resource_qj4nq"]
+script = ExtResource("4_uotoh")
+alpha_on_zero = 1.0
+metadata/_custom_type_script = "uid://bmyl4k3kw2h0d"
+
+[sub_resource type="Resource" id="Resource_2vmyr"]
+script = ExtResource("8_1wsm1")
+rotation_on_one = 720.0
+metadata/_custom_type_script = "uid://dv1uhigt6d8ao"
+
+[sub_resource type="Resource" id="Resource_leey6"]
+script = ExtResource("7_xmwuh")
+scale_on_zero = 1.0
+metadata/_custom_type_script = "uid://bncyqf7uw7s0m"
+
+[node name="MoveHighlighter" type="Control" unique_id=699064380]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 128.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_uotoh")
+metadata/_custom_type_script = "uid://b6t2n0sgbssh3"
+
+[node name="Highlighted" type="TextureRect" parent="." unique_id=1618986711]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("1_x6ptl")
+
+[node name="ColorRect" type="ColorRect" parent="Highlighted" unique_id=1016641316]
+modulate = Color(0.9254902, 0.8862745, 0.5568628, 0.12941177)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="TweenExecutor" type="Node" parent="Highlighted/ColorRect" unique_id=2090670731 node_paths=PackedStringArray("target")]
+script = ExtResource("2_rfvwg")
+run_at_start = true
+target = NodePath("..")
+effectors = Array[ExtResource("3_3g1c0")]([SubResource("Resource_xmwuh")])
+duration = 0.5
+easing = 2
+loop = true
+ping_pong = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="Selected" type="TextureRect" parent="." unique_id=1423930845]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("5_3g1c0")
+
+[node name="ColorRect" type="ColorRect" parent="Selected" unique_id=1532032601]
+modulate = Color(0.558, 0.93, 0.56420004, 0.12941177)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Flashing" type="Node" parent="Selected/ColorRect" unique_id=1261337893 node_paths=PackedStringArray("target")]
+script = ExtResource("2_rfvwg")
+run_at_start = true
+target = NodePath("..")
+effectors = Array[ExtResource("3_3g1c0")]([SubResource("Resource_xmwuh")])
+duration = 0.5
+easing = 2
+loop = true
+ping_pong = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="FadeOut_Chosen" type="Node" parent="Selected/ColorRect" unique_id=866431442 node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+script = ExtResource("2_rfvwg")
+target = NodePath("../..")
+effectors = Array[ExtResource("3_3g1c0")]([SubResource("Resource_1wsm1"), SubResource("Resource_qj4nq")])
+duration = 1.0
+easing = 1
+transition = 1
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="FadeOut_NotChosen" type="Node" parent="Selected/ColorRect" unique_id=1049091182 node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+script = ExtResource("2_rfvwg")
+target = NodePath("../..")
+effectors = Array[ExtResource("3_3g1c0")]([SubResource("Resource_2vmyr"), SubResource("Resource_leey6")])
+duration = 0.75
+easing = 1
+transition = 7
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c3wbsone14rsk"]
+
+[ext_resource type="Script" uid="uid://can66fu2g0liy" path="res://scripts/map/map_tile.gd" id="1_ti2mb"]
+[ext_resource type="Texture2D" uid="uid://dfrshje0xqs5" path="res://textures/sprites/event_tile.png" id="2_uo42h"]
+
+[node name="MapTile" type="Node2D" unique_id=1307767725]
+script = ExtResource("1_ti2mb")
+metadata/_custom_type_script = "uid://can66fu2g0liy"
+
+[node name="Texture" type="Sprite2D" parent="." unique_id=368355120]
+position = Vector2(0, 32)
+texture = ExtResource("2_uo42h")
+hframes = 2
