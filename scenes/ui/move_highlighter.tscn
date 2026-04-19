@@ -15,6 +15,16 @@ alpha_on_zero = 0.2
 alpha_on_one = 0.5
 metadata/_custom_type_script = "uid://bmyl4k3kw2h0d"
 
+[sub_resource type="Resource" id="Resource_2vmyr"]
+script = ExtResource("8_1wsm1")
+rotation_on_one = 720.0
+metadata/_custom_type_script = "uid://dv1uhigt6d8ao"
+
+[sub_resource type="Resource" id="Resource_leey6"]
+script = ExtResource("7_xmwuh")
+scale_on_zero = 1.0
+metadata/_custom_type_script = "uid://bncyqf7uw7s0m"
+
 [sub_resource type="Resource" id="Resource_1wsm1"]
 script = ExtResource("7_xmwuh")
 scale_on_zero = 1.0
@@ -25,16 +35,6 @@ metadata/_custom_type_script = "uid://bncyqf7uw7s0m"
 script = ExtResource("4_uotoh")
 alpha_on_zero = 1.0
 metadata/_custom_type_script = "uid://bmyl4k3kw2h0d"
-
-[sub_resource type="Resource" id="Resource_2vmyr"]
-script = ExtResource("8_1wsm1")
-rotation_on_one = 720.0
-metadata/_custom_type_script = "uid://dv1uhigt6d8ao"
-
-[sub_resource type="Resource" id="Resource_leey6"]
-script = ExtResource("7_xmwuh")
-scale_on_zero = 1.0
-metadata/_custom_type_script = "uid://bncyqf7uw7s0m"
 
 [node name="MoveHighlighter" type="Control" unique_id=699064380]
 custom_minimum_size = Vector2(128, 128)
@@ -49,7 +49,7 @@ metadata/_custom_type_script = "uid://b6t2n0sgbssh3"
 
 [node name="Highlighted" type="TextureRect" parent="." unique_id=1618986711]
 unique_name_in_owner = true
-visible = false
+modulate = Color(1, 1, 1, 0.5019608)
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 0
 offset_right = 40.0
@@ -79,8 +79,19 @@ loop = true
 ping_pong = true
 metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
 
+[node name="FadeOut_NotChosen" type="Node" parent="Highlighted/ColorRect" unique_id=1049091182 node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+script = ExtResource("2_rfvwg")
+target = NodePath("../..")
+effectors = Array[ExtResource("3_3g1c0")]([SubResource("Resource_2vmyr"), SubResource("Resource_leey6")])
+duration = 0.75
+easing = 1
+transition = 7
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
 [node name="Selected" type="TextureRect" parent="." unique_id=1423930845]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 0
 offset_right = 40.0
@@ -118,14 +129,4 @@ effectors = Array[ExtResource("3_3g1c0")]([SubResource("Resource_1wsm1"), SubRes
 duration = 1.0
 easing = 1
 transition = 1
-metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
-
-[node name="FadeOut_NotChosen" type="Node" parent="Selected/ColorRect" unique_id=1049091182 node_paths=PackedStringArray("target")]
-unique_name_in_owner = true
-script = ExtResource("2_rfvwg")
-target = NodePath("../..")
-effectors = Array[ExtResource("3_3g1c0")]([SubResource("Resource_2vmyr"), SubResource("Resource_leey6")])
-duration = 0.75
-easing = 1
-transition = 7
 metadata/_custom_type_script = "uid://di4dkxsfw6fxr"

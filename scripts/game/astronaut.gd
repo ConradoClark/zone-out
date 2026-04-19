@@ -21,6 +21,7 @@ func _on_game_manager(obj: GameManager):
     
 func _on_move(target: Vector2i):
     var target_pos = tile_renderer.map_2_world(target)
+    grid_position = target
     move_anim.call_deferred(target_pos)
 
 func move_anim(target: Vector2):
@@ -31,4 +32,4 @@ func move_anim(target: Vector2):
         .set_ease(Tween.EASE_OUT)\
         .set_trans(Tween.TRANS_SPRING)
     await move_tween.finished
-    game_manager.on_move_committed.emit(target)
+    game_manager.commit_move(target)

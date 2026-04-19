@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://w27m13teraie" path="res://scripts/game/astronaut.gd" id="3_rymbd"]
 [ext_resource type="Script" uid="uid://bxyd1d5e8fdb1" path="res://scripts/map/tile_renderer.gd" id="4_gqj74"]
 [ext_resource type="Script" uid="uid://dvsu4kgpgqnbi" path="res://scripts/core/dependency/object_registrar.gd" id="4_ng082"]
+[ext_resource type="Script" uid="uid://cet2my5etbobg" path="res://scripts/game/camera_on_resolve.gd" id="4_tsw83"]
 [ext_resource type="Script" uid="uid://bb46t1ojbtf3w" path="res://scripts/core/procgen/wfc/wfc_rule.gd" id="4_u2itj"]
 [ext_resource type="Script" uid="uid://oypl38q2ef0g" path="res://scripts/core/procgen/wfc/rules/wfc_rule_always.gd" id="5_qnsk6"]
 [ext_resource type="Script" uid="uid://btqxkq751taka" path="res://scripts/core/procgen/wfc/rules/wfc_tile_collection.gd" id="6_jaybc"]
@@ -16,7 +17,13 @@
 [ext_resource type="Shader" uid="uid://0e17q838h77t" path="res://shaders/general/lut.gdshader" id="12_x5c4o"]
 [ext_resource type="Texture2D" uid="uid://47jpq0irip02" path="res://textures/washed_lut.png" id="13_hth3n"]
 [ext_resource type="PackedScene" uid="uid://bshfmhsfv2vv4" path="res://scenes/ui/ui_layer.tscn" id="14_hth3n"]
+[ext_resource type="Script" uid="uid://di4dkxsfw6fxr" path="res://scripts/core/effects/executors/tween_executor.gd" id="14_y17gc"]
 [ext_resource type="Script" uid="uid://d4cxshwu0xg0t" path="res://scripts/game/game_manager.gd" id="15_g8qi1"]
+[ext_resource type="Script" uid="uid://dk0guwvvdagde" path="res://scripts/core/effects/effector.gd" id="15_iguoi"]
+[ext_resource type="Script" uid="uid://vx4cfraa6li4" path="res://scripts/core/effects/effectors/position_effector.gd" id="16_y17gc"]
+[ext_resource type="Script" uid="uid://dv1uhigt6d8ao" path="res://scripts/core/effects/effectors/rotation_degrees_effector.gd" id="17_iguoi"]
+[ext_resource type="Script" uid="uid://b1pkx4syn1vk3" path="res://scripts/game/resource_manager.gd" id="23_2cuu8"]
+[ext_resource type="Script" uid="uid://ddxyay4lq6dtl" path="res://scripts/game/tile_resolver.gd" id="24_va8c3"]
 
 [sub_resource type="Resource" id="Resource_u2itj"]
 script = ExtResource("6_jaybc")
@@ -27,6 +34,18 @@ metadata/_custom_type_script = "uid://btqxkq751taka"
 script = ExtResource("5_qnsk6")
 collection = SubResource("Resource_u2itj")
 metadata/_custom_type_script = "uid://oypl38q2ef0g"
+
+[sub_resource type="Resource" id="Resource_iguoi"]
+script = ExtResource("16_y17gc")
+position_on_zero = Vector2(0, 24)
+position_on_one = Vector2(0, 12)
+metadata/_custom_type_script = "uid://vx4cfraa6li4"
+
+[sub_resource type="Resource" id="Resource_tsw83"]
+script = ExtResource("17_iguoi")
+rotation_on_zero = -25.0
+rotation_on_one = 25.0
+metadata/_custom_type_script = "uid://dv1uhigt6d8ao"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g8qi1"]
 shader = ExtResource("12_x5c4o")
@@ -70,6 +89,10 @@ registry_name = "main_camera"
 world = true
 metadata/_custom_type_script = "uid://dvsu4kgpgqnbi"
 
+[node name="CameraOnResolve" type="Node" parent="Camera2D" unique_id=710772754]
+script = ExtResource("4_tsw83")
+metadata/_custom_type_script = "uid://cet2my5etbobg"
+
 [node name="WfcGenerator" type="Node" parent="." unique_id=2142547466]
 script = ExtResource("2_gy8d5")
 all_tiles = ExtResource("3_lsyhs")
@@ -101,6 +124,30 @@ texture = ExtResource("1_tinvi")
 texture = ExtResource("2_qnsk6")
 texture_scale = 8.0
 
+[node name="Floating" type="Node" parent="Astronaut" unique_id=1212547616 node_paths=PackedStringArray("target")]
+script = ExtResource("14_y17gc")
+run_at_start = true
+target = NodePath("../Sprite")
+effectors = Array[ExtResource("15_iguoi")]([SubResource("Resource_iguoi")])
+duration = 1.0
+easing = 2
+transition = 1
+loop = true
+ping_pong = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="Spinning" type="Node" parent="Astronaut" unique_id=214524449 node_paths=PackedStringArray("target")]
+script = ExtResource("14_y17gc")
+run_at_start = true
+target = NodePath("../Sprite")
+effectors = Array[ExtResource("15_iguoi")]([SubResource("Resource_tsw83")])
+duration = 4.0
+easing = 2
+transition = 1
+loop = true
+ping_pong = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=930054684]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=948357629]
@@ -116,3 +163,11 @@ grow_vertical = 2
 [node name="GameManager" type="Node" parent="." unique_id=1471174998]
 script = ExtResource("15_g8qi1")
 metadata/_custom_type_script = "uid://d4cxshwu0xg0t"
+
+[node name="ResourceManager" type="Node" parent="." unique_id=1945168578]
+script = ExtResource("23_2cuu8")
+metadata/_custom_type_script = "uid://b1pkx4syn1vk3"
+
+[node name="TileResolver" type="Node" parent="." unique_id=419140399]
+script = ExtResource("24_va8c3")
+metadata/_custom_type_script = "uid://ddxyay4lq6dtl"

@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_ymuue")
 tile_name = "tile_resource_key"
+tooltip = "An alien key capable of "
 metadata/_custom_type_script = "uid://c651a1a8nryga"

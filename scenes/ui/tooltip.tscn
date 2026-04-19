@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://xudx4r48migu"]
+
+[ext_resource type="Script" uid="uid://bagc6alfjf4wq" path="res://scripts/ui/hover_tooltip.gd" id="1_mtwet"]
+
+[node name="Tooltip" type="Node" unique_id=1622893306]
+script = ExtResource("1_mtwet")
+metadata/_custom_type_script = "uid://bagc6alfjf4wq"

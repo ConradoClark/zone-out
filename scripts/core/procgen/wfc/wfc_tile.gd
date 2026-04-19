@@ -5,3 +5,5 @@ class_name WfcTile
 @export var tile_name: String
 @export var weight: float = 1.
 @export var properties: Dictionary[String, Variant]
+@export var resolver: Script
+@export_multiline var tooltip: String

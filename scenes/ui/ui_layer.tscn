@@ -2,9 +2,39 @@
 
 [ext_resource type="Texture2D" uid="uid://bagxvsohkdn6a" path="res://textures/sprites/top_border.png" id="1_0d208"]
 [ext_resource type="Texture2D" uid="uid://gbc0fqnbkd1" path="res://textures/sprites/bottom_border.png" id="1_3eqaf"]
+[ext_resource type="PackedScene" uid="uid://po0cpr2jafxu" path="res://scenes/ui/horror_icon.tscn" id="1_jj6jx"]
+[ext_resource type="Texture2D" uid="uid://dj8wchb0eehc4" path="res://textures/sprites/icons/fuel_icon.png" id="2_mvntu"]
+[ext_resource type="FontFile" uid="uid://cj6ttbt4j6ph5" path="res://fonts/BarberChop.otf" id="3_d4ycy"]
 [ext_resource type="Script" uid="uid://byr0e3chp4m4j" path="res://scripts/ui/ui_move_highlighter.gd" id="3_nhiu8"]
+[ext_resource type="Script" uid="uid://bagc6alfjf4wq" path="res://scripts/ui/hover_tooltip.gd" id="4_jq4xh"]
+[ext_resource type="Texture2D" uid="uid://mtyrq5kgeewf" path="res://textures/sprites/icons/energy_icon.png" id="4_jqcis"]
+[ext_resource type="Texture2D" uid="uid://ds8yjdqasq8v" path="res://textures/sprites/icons/tech_icon.png" id="5_3s0y6"]
+[ext_resource type="Script" uid="uid://bdqet63xmor6h" path="res://scripts/ui/typewriter_label.gd" id="7_yg43r"]
+[ext_resource type="Script" uid="uid://c526pje7fat2v" path="res://scripts/ui/ui_logtext.gd" id="8_42r3o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jqcis"]
+font = ExtResource("3_d4ycy")
+font_size = 32
+font_color = Color(0.9411765, 0.9490196, 0.9137255, 1)
+outline_size = 8
+outline_color = Color(0.5137255, 0.3254902, 0.73333335, 1)
+shadow_color = Color(0.7254902, 0.30980393, 0.9882353, 1)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yg43r"]
+font = ExtResource("3_d4ycy")
+font_size = 32
+font_color = Color(0.9254902, 0.8862745, 0.5568628, 1)
+outline_size = 8
+outline_color = Color(0, 0.20392157, 0.35686275, 1)
+shadow_color = Color(0.29411766, 0.46666667, 0.627451, 1)
+shadow_offset = Vector2(0, 3)
 
 [node name="UILayer" type="CanvasLayer" unique_id=420124059]
+
+[node name="HorrorIcon" parent="." unique_id=1573909083 instance=ExtResource("1_jj6jx")]
+offset_top = -418.0
+offset_bottom = -418.0
 
 [node name="Control" type="Control" parent="." unique_id=856734968]
 layout_mode = 3
@@ -51,6 +81,96 @@ patch_margin_bottom = 32
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2" unique_id=1332837023]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer" unique_id=145400683]
+layout_mode = 2
+
+[node name="Fuel" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer" unique_id=1540996640]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="FuelIcon" type="TextureRect" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Fuel" unique_id=900046092]
+layout_mode = 2
+texture = ExtResource("2_mvntu")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="FuelCounter" type="Label" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Fuel" unique_id=748668032]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "10 / 15"
+label_settings = SubResource("LabelSettings_jqcis")
+vertical_alignment = 2
+
+[node name="HoverTooltip" type="Node" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Fuel" unique_id=49152112 node_paths=PackedStringArray("control")]
+script = ExtResource("4_jq4xh")
+tooltip = "The amount of fuel I have left in my jets."
+control = NodePath("..")
+metadata/_custom_type_script = "uid://bagc6alfjf4wq"
+
+[node name="Spacer" type="Control" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer" unique_id=1573475012]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Energy" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer" unique_id=1322332441]
+layout_mode = 2
+
+[node name="EnergyIcon" type="TextureRect" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Energy" unique_id=1772565786]
+layout_mode = 2
+texture = ExtResource("4_jqcis")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="EnergyCounter" type="Label" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Energy" unique_id=1051849575]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "10 / 15"
+label_settings = SubResource("LabelSettings_jqcis")
+vertical_alignment = 2
+
+[node name="HoverTooltip" type="Node" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Energy" unique_id=63664790 node_paths=PackedStringArray("control")]
+script = ExtResource("4_jq4xh")
+tooltip = "The amount of ability energy I have left in my astro suit."
+control = NodePath("..")
+metadata/_custom_type_script = "uid://bagc6alfjf4wq"
+
+[node name="Spacer2" type="Control" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer" unique_id=699918593]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Tech" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer" unique_id=21121415]
+layout_mode = 2
+
+[node name="TechIcon" type="TextureRect" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Tech" unique_id=1140203517]
+layout_mode = 2
+texture = ExtResource("5_3s0y6")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TechCounter" type="Label" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Tech" unique_id=1053346401]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_jqcis")
+vertical_alignment = 2
+
+[node name="HoverTooltip" type="Node" parent="Control/MarginContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Tech" unique_id=2073557423 node_paths=PackedStringArray("control")]
+script = ExtResource("4_jq4xh")
+tooltip = "I can use this tech to research new upgrades for my suit."
+control = NodePath("..")
+metadata/_custom_type_script = "uid://bagc6alfjf4wq"
+
 [node name="NinePatchRect" type="NinePatchRect" parent="Control/MarginContainer/VBoxContainer" unique_id=621463337]
 custom_minimum_size = Vector2(0, 256)
 layout_mode = 2
@@ -62,6 +182,74 @@ patch_margin_right = 60
 patch_margin_bottom = 60
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/NinePatchRect" unique_id=1236847961]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer" unique_id=1182637559]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=1056863975]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+
+[node name="LogCaption" type="Label" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer" unique_id=171201290]
+layout_mode = 2
+size_flags_vertical = 1
+text = "LOG"
+label_settings = SubResource("LabelSettings_yg43r")
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer" unique_id=145802417]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "I need to reassemble the key and get out of here!"
+label_settings = SubResource("LabelSettings_jqcis")
+autowrap_mode = 2
+script = ExtResource("7_yg43r")
+speed_seconds = 0.01
+metadata/_custom_type_script = "uid://bdqet63xmor6h"
+
+[node name="UILogText" type="Node" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer" unique_id=879283182 node_paths=PackedStringArray("log_caption", "log_label")]
+script = ExtResource("8_42r3o")
+log_caption = NodePath("../LogCaption")
+log_label = NodePath("../Label")
+metadata/_custom_type_script = "uid://c526pje7fat2v"
+
+[node name="Control" type="Control" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=578835450]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AbilitiesCaption" type="Label" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=53015135]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Abilities
+"
+label_settings = SubResource("LabelSettings_yg43r")
+
+[node name="Control2" type="Control" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=477672551]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ResearchCaption" type="Label" parent="Control/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=1963172762]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Research"
+label_settings = SubResource("LabelSettings_yg43r")
 
 [node name="UIMoveHighlighter" type="Control" parent="." unique_id=1733910529]
 layout_mode = 3

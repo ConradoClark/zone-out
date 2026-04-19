@@ -4,6 +4,7 @@ class_name UIMoveHighlighter
 
 const MOVE_HIGHLIGHTER = preload("uid://ba582i1ba3kq8")
 const highlighter_half_size = Vector2(64,32)
+const TOOLTIP = preload("uid://xudx4r48migu")
 
 var game_manager: GameManager
 var main_camera: Camera2D
@@ -50,6 +51,11 @@ func _spawn_highlighter(pos: Vector2i):
     var screen_pos = main_camera.get_canvas_transform() * world_pos
     highlight.global_position = screen_pos
     highlight.on_highlight_fn = func(): _move_intention(highlight, target_grid_pos)
+    var tile = tile_renderer.current_generator.map[target_grid_pos]
+    var tooltip = TOOLTIP.instantiate() as HoverTooltip
+    tooltip.tooltip = tile.tooltip
+    tooltip.control = highlight
+    highlight.add_child(tooltip)
     add_child(highlight)
     highlighters.append(highlight)
 

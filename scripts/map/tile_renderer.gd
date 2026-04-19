@@ -9,10 +9,12 @@ const tile_gap = Vector2(0,0)
 const MAP_TILE = preload("uid://c3wbsone14rsk")
 
 const registry_key = "tile_renderer"
+var current_generator: WfcGenerator
 
 func _ready():
     World.register(registry_key, self)
     if debug:
+        current_generator = debug_generator
         debug_generator.collapse()
         render(debug_generator.map)
 
@@ -26,7 +28,7 @@ func render(map: Dictionary[Vector2i, WfcTile]):
         tile.global_position = global_position + (tile_size + tile_gap)*Vector2(item.x,item.y)
 
 func world_2_map(pos: Vector2) -> Vector2i:
-    var map_pos = pos - global_position / (tile_size + tile_gap)
+    var map_pos = (pos - global_position) / (tile_size + tile_gap)
     return Vector2i(floori(map_pos.x), floori(map_pos.y))
 
 func map_2_world(pos: Vector2i) -> Vector2:

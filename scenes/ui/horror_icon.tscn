@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://po0cpr2jafxu"]
+
+[ext_resource type="Texture2D" uid="uid://ctmumej78h8f2" path="res://textures/sprites/horror.png" id="1_5w5nn"]
+[ext_resource type="Script" uid="uid://df3d0bnemi7tb" path="res://scripts/core/effects/anim_ticker.gd" id="2_oj6yp"]
+[ext_resource type="Texture2D" uid="uid://l6fb7v55n17q" path="res://textures/sprites/pointing_arrow.png" id="3_w0yhd"]
+[ext_resource type="FontFile" uid="uid://cj6ttbt4j6ph5" path="res://fonts/BarberChop.otf" id="4_kthhp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4i801"]
+font = ExtResource("4_kthhp")
+font_size = 24
+font_color = Color(0.9490196, 0.3647059, 0.3647059, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(1, 0.65882355, 0.65882355, 1)
+shadow_offset = Vector2(0, 2)
+
+[node name="HorrorIcon" type="Control" unique_id=1573909083]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0)
+
+[node name="TextureRect" type="Sprite2D" parent="." unique_id=901153754]
+texture = ExtResource("1_5w5nn")
+hframes = 2
+
+[node name="AnimTicker" type="Node" parent="TextureRect" unique_id=912902843 node_paths=PackedStringArray("sprite")]
+script = ExtResource("2_oj6yp")
+sprite = NodePath("..")
+metadata/_custom_type_script = "uid://df3d0bnemi7tb"
+
+[node name="Control" type="Control" parent="." unique_id=672125910]
+anchors_preset = 0
+offset_top = -40.0
+offset_right = 40.0
+
+[node name="PointerRotation" type="TextureRect" parent="Control" unique_id=466212819]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.00003
+offset_top = -40.000004
+offset_right = -3.0517578e-05
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(60, 60)
+pivot_offset_ratio = Vector2(-1, 0)
+texture = ExtResource("3_w0yhd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=381298307]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = 20.0
+offset_right = 48.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LOOKING FOR YOU"
+label_settings = SubResource("LabelSettings_4i801")
+horizontal_alignment = 1
+vertical_alignment = 1

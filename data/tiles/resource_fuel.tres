@@ -1,8 +1,11 @@
 [gd_resource type="Resource" script_class="WfcTile" format=3 uid="uid://vdugtg4qx6pe"]
 
+[ext_resource type="Script" uid="uid://c5jf3lut5oqad" path="res://scripts/game/tile_resolvers/resources/fuel_resolver.gd" id="1_6t01b"]
 [ext_resource type="Script" uid="uid://c651a1a8nryga" path="res://scripts/core/procgen/wfc/wfc_tile.gd" id="1_wgcka"]
 
 [resource]
 script = ExtResource("1_wgcka")
 tile_name = "tile_resource_fuel"
+resolver = ExtResource("1_6t01b")
+tooltip = "It seems that some leftover fuel is lingering around here."
 metadata/_custom_type_script = "uid://c651a1a8nryga"

@@ -5,11 +5,14 @@
 [ext_resource type="Resource" uid="uid://kwl4lksdt8t2" path="res://data/tiles/nothing.tres" id="3_5vq55"]
 [ext_resource type="Resource" uid="uid://dcag2r4lyyv7h" path="res://data/tiles/event_default.tres" id="4_eqs4s"]
 [ext_resource type="Texture2D" uid="uid://dfrshje0xqs5" path="res://textures/sprites/event_tile.png" id="5_xnkkh"]
+[ext_resource type="Resource" uid="uid://vdugtg4qx6pe" path="res://data/tiles/resource_fuel.tres" id="6_xnkkh"]
+[ext_resource type="Texture2D" uid="uid://dm1q7lijoyy80" path="res://textures/sprites/tiles/resource_fuel.png" id="7_acwqp"]
 
 [resource]
 script = ExtResource("1_g5a0v")
 textures = Dictionary[ExtResource("2_8ldp0"), Texture2D]({
 ExtResource("3_5vq55"): null,
-ExtResource("4_eqs4s"): ExtResource("5_xnkkh")
+ExtResource("4_eqs4s"): ExtResource("5_xnkkh"),
+ExtResource("6_xnkkh"): ExtResource("7_acwqp")
 })
 metadata/_custom_type_script = "uid://clsmhd0ekoi22"
