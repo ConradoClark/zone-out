@@ -4,6 +4,7 @@ signal on_tick
 
 var global_timer: Timer
 var timer_i: int = 0
+var debug = true
 
 func _ready():
     global_timer = Timer.new()

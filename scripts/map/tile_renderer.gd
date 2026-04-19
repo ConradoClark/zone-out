@@ -2,7 +2,6 @@ extends Node2D
 
 class_name TileRenderer
 
-@export var debug: bool
 @export var debug_generator: WfcGenerator
 const tile_size = Vector2(128, 128)
 const tile_gap = Vector2(0,0)
@@ -13,7 +12,7 @@ var current_generator: WfcGenerator
 
 func _ready():
     World.register(registry_key, self)
-    if debug:
+    if Fx.debug:
         current_generator = debug_generator
         debug_generator.collapse()
         render(debug_generator.map)

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://df3d0bnemi7tb" path="res://scripts/core/effects/anim_ticker.gd" id="2_oj6yp"]
 [ext_resource type="Texture2D" uid="uid://l6fb7v55n17q" path="res://textures/sprites/pointing_arrow.png" id="3_w0yhd"]
 [ext_resource type="FontFile" uid="uid://cj6ttbt4j6ph5" path="res://fonts/BarberChop.otf" id="4_kthhp"]
+[ext_resource type="Script" uid="uid://cjpjlos45qo2u" path="res://scripts/game/horror.gd" id="5_4i801"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4i801"]
 font = ExtResource("4_kthhp")
@@ -74,3 +75,12 @@ text = "LOOKING FOR YOU"
 label_settings = SubResource("LabelSettings_4i801")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Horror" type="Node" parent="." unique_id=235761902 node_paths=PackedStringArray("icon_control", "pointer", "description_label")]
+script = ExtResource("5_4i801")
+grid_pos = Vector2i(0, -10)
+icon_control = NodePath("..")
+pointer = NodePath("../Control/PointerRotation")
+description_label = NodePath("../Label")
+debug = true
+metadata/_custom_type_script = "uid://cjpjlos45qo2u"

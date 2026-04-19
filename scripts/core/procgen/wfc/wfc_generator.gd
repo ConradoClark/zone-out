@@ -7,7 +7,6 @@ class_name WfcGenerator
 @export var rules: Dictionary[WfcTile, WfcRule]
 @export var grid_size: Vector2i
 @export var starting_pos: Vector2i = Vector2i.ZERO
-@export var debug: bool
 var map: Dictionary[Vector2i, WfcTile] = {}
 var possible_tiles: Dictionary[Vector2i, WfcTileCollection] = {}
 
@@ -66,7 +65,7 @@ func next_step() -> bool:
         if pos_rules.has(current_pos):
             pos_rules[current_pos].apply_rules(current_pos, map, possible_tiles)
         var tile = _randomize()
-        if debug: print_rich("Generated [color=green]%s[/color] at [color=yellow]%s[/color]" % [tile.tile_name, current_pos])
+        if Fx.debug: print_rich("Generated [color=green]%s[/color] at [color=yellow]%s[/color]" % [tile.tile_name, current_pos])
         map[current_pos] = tile
         if rules.has(tile):
             rules[tile].apply_rules(current_pos, map, possible_tiles)

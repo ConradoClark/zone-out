@@ -17,9 +17,7 @@ func add_resource(res: String, amount: int):
         resources[res] = amount
         resource_added.emit(res, amount, amount)
         return
-    var max_res = 999
-    if resources_max.has(res):
-        max_res = resources_max[res]
+    var max_res = get_max(res)
     resources[res] = clamp(resources[res]+amount, 0, max_res)
     resource_added.emit(res, amount, resources[res])
 
@@ -28,3 +26,13 @@ func subtract_resource(res: String, amount: int):
         return
     resources[res] = clamp(resources[res]-amount, 0 , resources[res])
     resource_subtracted.emit(res, amount, resources[res])
+    
+func get_amount(res:String) -> int:
+    if not resources.has(res):
+        return 0
+    return resources[res]
+    
+func get_max(res: String):
+    if resources_max.has(res):
+        return resources_max[res]
+    return 999
