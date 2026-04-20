@@ -26,7 +26,7 @@ func _on_resolve():
     if move_tween:
         move_tween.kill()
     move_tween = create_tween()
-    move_tween.tween_property(main_camera, "global_position", initial_position + astronaut.global_position, 1.)\
+    move_tween.tween_property(main_camera, "global_position", initial_position + astronaut.global_position, .75)\
         .set_ease(Tween.EASE_OUT)\
         .set_trans(Tween.TRANS_BACK)
     await move_tween.finished

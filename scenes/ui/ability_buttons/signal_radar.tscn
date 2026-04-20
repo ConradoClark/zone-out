@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://dqj26lhbt0ioq"]
+
+[ext_resource type="Texture2D" uid="uid://cxxw7rdmg4chb" path="res://textures/sprites/ability_border.png" id="1_8umc1"]
+[ext_resource type="Texture2D" uid="uid://bpte3xmbfhx2d" path="res://textures/sprites/abilities/signal.png" id="2_1bxhu"]
+[ext_resource type="Script" uid="uid://bagc6alfjf4wq" path="res://scripts/ui/hover_tooltip.gd" id="3_1bxhu"]
+[ext_resource type="Script" uid="uid://bbalwl2ujskyg" path="res://scripts/ui/ui_ability_button.gd" id="4_allmd"]
+[ext_resource type="Script" uid="uid://bc4goumgxt5p" path="res://scripts/game/abilities/signal_radar.gd" id="5_et1qe"]
+
+[node name="SignalRadar" type="Control" unique_id=336035361]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="AbilityBorder" type="TextureRect" parent="." unique_id=1876371330]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_8umc1")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="AbilityIcon" type="TextureRect" parent="AbilityBorder" unique_id=1693055060]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1bxhu")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="HoverTooltip" type="Node" parent="." unique_id=1323464642 node_paths=PackedStringArray("control")]
+script = ExtResource("3_1bxhu")
+tooltip = "SIGNAL RADAR - Spend 10 energy to find where the keys are. Be careful, the horror may detect your signal as well!"
+control = NodePath("..")
+metadata/_custom_type_script = "uid://bagc6alfjf4wq"
+
+[node name="UIAbilityButton" type="Node" parent="." unique_id=1025562575 node_paths=PackedStringArray("control", "border", "image", "tooltip")]
+script = ExtResource("4_allmd")
+ability_function = ExtResource("5_et1qe")
+control = NodePath("..")
+border = NodePath("../AbilityBorder")
+image = NodePath("../AbilityBorder/AbilityIcon")
+cooldown = 4
+tooltip = NodePath("../HoverTooltip")
+cost = Dictionary[String, int]({
+"energy": 10
+})
+metadata/_custom_type_script = "uid://bbalwl2ujskyg"

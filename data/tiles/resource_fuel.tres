@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_wgcka")
 tile_name = "tile_resource_fuel"
+weight = 1.4
 resolver = ExtResource("1_6t01b")
 tooltip = "It seems that some leftover fuel is lingering around here."
 metadata/_custom_type_script = "uid://c651a1a8nryga"

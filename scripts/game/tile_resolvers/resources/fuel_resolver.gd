@@ -11,5 +11,5 @@ func _ready():
 func resolve():
     await World.wait_for_objects(_required)
     # dice roll + others factors to see how much to add
-    resources.add_resource("fuel", 1)
+    resources.add_resource("fuel", randi_range(3, 5))
     queue_free()

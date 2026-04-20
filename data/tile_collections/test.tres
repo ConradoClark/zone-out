@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://btqxkq751taka" path="res://scripts/core/procgen/wfc/rules/wfc_tile_collection.gd" id="1_x24i1"]
 [ext_resource type="Script" uid="uid://c651a1a8nryga" path="res://scripts/core/procgen/wfc/wfc_tile.gd" id="2_7xegv"]
 [ext_resource type="Resource" uid="uid://kwl4lksdt8t2" path="res://data/tiles/nothing.tres" id="3_yol20"]
-[ext_resource type="Resource" uid="uid://dcag2r4lyyv7h" path="res://data/tiles/event_default.tres" id="4_hrmkk"]
 [ext_resource type="Resource" uid="uid://vdugtg4qx6pe" path="res://data/tiles/resource_fuel.tres" id="5_hrmkk"]
+[ext_resource type="Resource" uid="uid://qega27842yta" path="res://data/tiles/resource_energy.tres" id="6_hs4u6"]
 
 [resource]
 script = ExtResource("1_x24i1")
-tiles = Array[ExtResource("2_7xegv")]([ExtResource("3_yol20"), ExtResource("4_hrmkk"), ExtResource("5_hrmkk")])
+tiles = Array[ExtResource("2_7xegv")]([ExtResource("3_yol20"), ExtResource("5_hrmkk"), ExtResource("6_hs4u6")])
 metadata/_custom_type_script = "uid://btqxkq751taka"

@@ -21,7 +21,7 @@ var queued_positions: Array[Vector2i]
 @export var y_pow: int = 4
 
 func _ready():
-    collapse.call_deferred()
+    pass
 
 func collapse():
     while(next_step()):

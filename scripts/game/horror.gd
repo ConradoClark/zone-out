@@ -12,6 +12,7 @@ var horror_state: State
 var default_speed: int = 1
 var looking_factor: int = 10
 var detected_factor: int = 10
+const registry_key = "horror"
 
 enum State{
     LookingForYou,
@@ -21,9 +22,10 @@ enum State{
 }
 
 func _ready():
+    World.register(registry_key, self)
     World.require(GameManager.registry_key, _on_game_manager)
     World.require(Astronaut.registry_key, World.populate(self, "astronaut"))
-    _print_position()
+    _update_marker()
     
 func _print_position():
     if not Fx.debug: return
@@ -46,6 +48,25 @@ func move():
     # it should increase its move range as turns pass
     match horror_state:
         State.LookingForYou: _looking_for_you()
+        State.ChasingYou: _chasing_you()
+        State.ClosingIn: _looking_for_you()
+        State.ImminentAttack: _chasing_you()
+    var distance = (grid_pos - astronaut.grid_position).length()
+    if distance > 8 and horror_state == State.ChasingYou:
+        detected_factor -= randi_range(1,2)
+        if detected_factor <=0:
+            horror_state = State.LookingForYou
+    if distance < 6 and [State.ChasingYou, State.LookingForYou].has(horror_state):
+        horror_state = State.ClosingIn
+    if distance <= 2.9 and [State.ChasingYou, State.LookingForYou, State.ClosingIn].has(horror_state):
+        horror_state = State.ImminentAttack
+    if distance > 6 and horror_state == State.ClosingIn:
+        horror_state = State.LookingForYou
+    _update_marker()
+    if distance <= 2:
+        game_manager.lose("The Cosmic Horror got you!")
+        return
+    await get_tree().process_frame
     game_manager.resolve_horror()
     pass
     
@@ -63,7 +84,6 @@ func _looking_for_you():
         if len(possible)>0:
             var chosen = randi_range(0, len(possible)-1)
             grid_pos += possible[chosen]
-            _update_marker() 
     else:
         var possible: Array[Vector2i] = []
         var alternative: Array[Vector2i] = []
@@ -74,11 +94,9 @@ func _looking_for_you():
         if len(possible)>0:
             var chosen = randi_range(0, len(possible)-1)
             grid_pos += possible[chosen]
-            _update_marker() 
         elif len(alternative)>0:
             var chosen = randi_range(0, len(alternative)-1)
             grid_pos += alternative[chosen]
-            _update_marker()
     pass
 
 func _calc_directions() -> Dictionary[Vector2i, int]:
@@ -108,13 +126,36 @@ func _calc_directions() -> Dictionary[Vector2i, int]:
     return calcs  
     
 func _chasing_you():
-    pass
-    # should always walk in your direction, with a higher speed
-    # 
+    #moves twice in your direction
+    var dirs = _calc_directions()
+    for i in 2:
+        var possible: Array[Vector2i] = []
+        for dir in dirs:
+            var result = dirs[dir]
+            if result > 0: possible.append(dir)
+        if len(possible)>0:
+            var chosen = randi_range(0, len(possible)-1)
+            grid_pos += possible[chosen]
     
 func _update_marker():
     _print_position()
     var astronaut_pos = Vector2(astronaut.grid_position)
     var horror_pos = Vector2(grid_pos)
+    const center = Vector2(960,540-122)
+    const radius = 300
     var distance = astronaut_pos - horror_pos
-    pass
+    var rotation = astronaut_pos.angle_to_point(horror_pos) 
+    pointer.rotation = rotation + PI*.5
+    icon_control.global_position = center + Vector2(cos(rotation), sin(rotation)) * radius
+    var scale = lerp(2., 0.75, clamp(distance.length()*.1, 0., 1.))
+    icon_control.scale = Vector2(scale,scale)
+    match horror_state:
+        State.LookingForYou: description_label.text = "Looking for You"
+        State.ChasingYou: description_label.text = "Chasing You"
+        State.ClosingIn: description_label.text = "Closing In..."
+        State.ImminentAttack: description_label.text = "You'll soon be mine"
+    
+func detect_astronaut():
+    detected_factor = 4
+    horror_state = State.ChasingYou
+    _update_marker()

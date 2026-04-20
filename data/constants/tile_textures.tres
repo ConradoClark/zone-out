@@ -7,12 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://dfrshje0xqs5" path="res://textures/sprites/event_tile.png" id="5_xnkkh"]
 [ext_resource type="Resource" uid="uid://vdugtg4qx6pe" path="res://data/tiles/resource_fuel.tres" id="6_xnkkh"]
 [ext_resource type="Texture2D" uid="uid://dm1q7lijoyy80" path="res://textures/sprites/tiles/resource_fuel.png" id="7_acwqp"]
+[ext_resource type="Resource" uid="uid://d00ojbhe1arih" path="res://data/tiles/resource_key.tres" id="8_jkub7"]
+[ext_resource type="Texture2D" uid="uid://v4yyimymsove" path="res://textures/sprites/key_following.png" id="9_egn32"]
+[ext_resource type="Resource" uid="uid://qega27842yta" path="res://data/tiles/resource_energy.tres" id="10_20xl5"]
+[ext_resource type="Texture2D" uid="uid://crn4lhmnjoktm" path="res://textures/sprites/resource_energy.png" id="11_8sjv2"]
 
 [resource]
 script = ExtResource("1_g5a0v")
 textures = Dictionary[ExtResource("2_8ldp0"), Texture2D]({
 ExtResource("3_5vq55"): null,
 ExtResource("4_eqs4s"): ExtResource("5_xnkkh"),
-ExtResource("6_xnkkh"): ExtResource("7_acwqp")
+ExtResource("6_xnkkh"): ExtResource("7_acwqp"),
+ExtResource("8_jkub7"): ExtResource("9_egn32"),
+ExtResource("10_20xl5"): ExtResource("11_8sjv2")
 })
 metadata/_custom_type_script = "uid://clsmhd0ekoi22"

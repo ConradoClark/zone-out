@@ -12,11 +12,19 @@
 [ext_resource type="Script" uid="uid://b6gcrc4y3wh6c" path="res://scripts/ui/ui_resource_counter.gd" id="6_ykfca"]
 [ext_resource type="Script" uid="uid://bdqet63xmor6h" path="res://scripts/ui/typewriter_label.gd" id="7_yg43r"]
 [ext_resource type="Script" uid="uid://c526pje7fat2v" path="res://scripts/ui/ui_logtext.gd" id="8_42r3o"]
+[ext_resource type="Texture2D" uid="uid://d0lios4ug5add" path="res://textures/sprites/icons/key_icon.png" id="8_tth8g"]
+[ext_resource type="PackedScene" uid="uid://dqj26lhbt0ioq" path="res://scenes/ui/ability_buttons/signal_radar.tscn" id="12_45u8o"]
 [ext_resource type="Texture2D" uid="uid://dn7452k78kge2" path="res://textures/sprites/red_border.png" id="13_8q8ac"]
 [ext_resource type="Script" uid="uid://di4dkxsfw6fxr" path="res://scripts/core/effects/executors/tween_executor.gd" id="14_px8fw"]
+[ext_resource type="PackedScene" uid="uid://dhic2d63akmeq" path="res://scenes/ui/ability_buttons/barrel_roll.tscn" id="14_sxuoq"]
 [ext_resource type="Script" uid="uid://dk0guwvvdagde" path="res://scripts/core/effects/effector.gd" id="15_jcjul"]
 [ext_resource type="Script" uid="uid://dv1uhigt6d8ao" path="res://scripts/core/effects/effectors/rotation_degrees_effector.gd" id="16_45u8o"]
 [ext_resource type="Script" uid="uid://c2glhiqc66w4f" path="res://scripts/ui/game_over.gd" id="17_px8fw"]
+[ext_resource type="Script" uid="uid://bmyl4k3kw2h0d" path="res://scripts/core/effects/effectors/visibility_alpha_effector.gd" id="17_qn35r"]
+[ext_resource type="Script" uid="uid://dvsu4kgpgqnbi" path="res://scripts/core/dependency/object_registrar.gd" id="18_jcjul"]
+[ext_resource type="Texture2D" uid="uid://cxxw7rdmg4chb" path="res://textures/sprites/ability_border.png" id="19_qfaxu"]
+[ext_resource type="Script" uid="uid://s5vb5q26sbau" path="res://scripts/ui/restart_button.gd" id="20_88r4d"]
+[ext_resource type="Script" uid="uid://c1cg541lolex3" path="res://scripts/ui/victory.gd" id="22_s6nlp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jqcis"]
 font = ExtResource("3_d4ycy")
@@ -35,6 +43,19 @@ outline_size = 8
 outline_color = Color(0, 0.20392157, 0.35686275, 1)
 shadow_color = Color(0.29411766, 0.46666667, 0.627451, 1)
 shadow_offset = Vector2(0, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c6av5"]
+font = ExtResource("3_d4ycy")
+font_size = 24
+font_color = Color(0.9490196, 0.3647059, 0.3647059, 1)
+shadow_size = 4
+shadow_color = Color(0.019607844, 0.007843138, 0.039215688, 1)
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="Resource" id="Resource_otxdd"]
+script = ExtResource("17_qn35r")
+alpha_on_one = 1.0
+metadata/_custom_type_script = "uid://bmyl4k3kw2h0d"
 
 [sub_resource type="LabelSettings" id="LabelSettings_tth8g"]
 font = ExtResource("3_d4ycy")
@@ -59,6 +80,21 @@ script = ExtResource("16_45u8o")
 rotation_on_zero = -15.0
 rotation_on_one = 15.0
 metadata/_custom_type_script = "uid://dv1uhigt6d8ao"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxuoq"]
+bg_color = Color(0.16078432, 0.18039216, 0.14117648, 1)
+border_width_bottom = 8
+border_color = Color(0.019607844, 0.007843138, 0.039215688, 1)
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_s6nlp"]
+font = ExtResource("3_d4ycy")
+font_size = 48
+font_color = Color(0.41402668, 0.56, 0.1792, 1)
+outline_size = 8
+outline_color = Color(0.9411765, 0.9490196, 0.9137255, 1)
+shadow_color = Color(0.9411765, 0.9490196, 0.9137255, 1)
+shadow_offset = Vector2(0, 3)
 
 [node name="UILayer" type="CanvasLayer" unique_id=420124059]
 
@@ -181,11 +217,46 @@ tooltip = "The amount of ability energy I have left in my astro suit."
 control = NodePath("..")
 metadata/_custom_type_script = "uid://bagc6alfjf4wq"
 
+[node name="UIResourceCounter" type="Node" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Energy" unique_id=636697403 node_paths=PackedStringArray("label")]
+script = ExtResource("6_ykfca")
+label = NodePath("../EnergyCounter")
+resource_name = "energy"
+metadata/_custom_type_script = "uid://b6gcrc4y3wh6c"
+
 [node name="Spacer2" type="Control" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer" unique_id=699918593]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
+[node name="Keys" type="HBoxContainer" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer" unique_id=1078434767]
+layout_mode = 2
+
+[node name="KeyIcon" type="TextureRect" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Keys" unique_id=617145296]
+layout_mode = 2
+texture = ExtResource("8_tth8g")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="KeyCounter" type="Label" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Keys" unique_id=490984263]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "10 / 15"
+label_settings = SubResource("LabelSettings_jqcis")
+vertical_alignment = 2
+
+[node name="HoverTooltip" type="Node" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Keys" unique_id=252112306 node_paths=PackedStringArray("control")]
+script = ExtResource("4_jq4xh")
+tooltip = "The aliens keys I have collected so far"
+control = NodePath("..")
+metadata/_custom_type_script = "uid://bagc6alfjf4wq"
+
+[node name="UIResourceCounter" type="Node" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Keys" unique_id=1288433339 node_paths=PackedStringArray("label")]
+script = ExtResource("6_ykfca")
+label = NodePath("../KeyCounter")
+resource_name = "keys"
+metadata/_custom_type_script = "uid://b6gcrc4y3wh6c"
+
 [node name="Tech" type="HBoxContainer" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer" unique_id=21121415]
+visible = false
 layout_mode = 2
 
 [node name="TechIcon" type="TextureRect" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect2/MarginContainer/HBoxContainer/Tech" unique_id=1140203517]
@@ -267,13 +338,26 @@ custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AbilitiesCaption" type="Label" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=53015135]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=1275174734]
+layout_mode = 2
+
+[node name="AbilitiesCaption" type="Label" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=53015135]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
-size_flags_vertical = 1
-text = "Abilities
-"
+size_flags_vertical = 0
+text = "Abilities"
 label_settings = SubResource("LabelSettings_yg43r")
+
+[node name="AbilitiesContainer" type="HFlowContainer" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=456084494]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_constants/h_separation = 16
+
+[node name="SignalRadar" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer2/AbilitiesContainer" unique_id=336035361 instance=ExtResource("12_45u8o")]
+layout_mode = 2
+
+[node name="BarrelRoll" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer2/AbilitiesContainer" unique_id=1728877121 instance=ExtResource("14_sxuoq")]
+layout_mode = 2
 
 [node name="Control2" type="Control" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=477672551]
 custom_minimum_size = Vector2(64, 0)
@@ -281,11 +365,45 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="ResearchCaption" type="Label" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=1963172762]
+visible = false
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_vertical = 1
 text = "Research"
 label_settings = SubResource("LabelSettings_yg43r")
+
+[node name="LowOnFuel" type="Control" parent="Control/BottomBarContainer" unique_id=74936807]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Control/BottomBarContainer/LowOnFuel" unique_id=1098035688]
+layout_mode = 0
+offset_left = 32.0
+offset_top = -6.0
+offset_right = 150.0
+offset_bottom = 22.0
+text = "LOW ON FUEL"
+label_settings = SubResource("LabelSettings_c6av5")
+
+[node name="TweenExecutor" type="Node" parent="Control/BottomBarContainer/LowOnFuel/Label" unique_id=891209239 node_paths=PackedStringArray("target")]
+script = ExtResource("14_px8fw")
+run_at_start = true
+target = NodePath("..")
+effectors = Array[ExtResource("15_jcjul")]([SubResource("Resource_otxdd")])
+duration = 0.25
+easing = 3
+transition = 1
+loop = true
+ping_pong = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="ObjectRegistrar" type="Node" parent="Control/BottomBarContainer/LowOnFuel" unique_id=2042563921 node_paths=PackedStringArray("object")]
+script = ExtResource("18_jcjul")
+object = NodePath("..")
+registry_name = "low_fuel"
+world = true
+metadata/_custom_type_script = "uid://dvsu4kgpgqnbi"
 
 [node name="UIMoveHighlighter" type="Control" parent="." unique_id=1733910529]
 layout_mode = 3
@@ -372,9 +490,119 @@ loop = true
 ping_pong = true
 metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
 
+[node name="Button" type="Button" parent="Lost/MarginContainer/VBoxContainer" unique_id=1600940353]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d4ycy")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_sxuoq")
+text = "NEW RUN"
+script = ExtResource("20_88r4d")
+metadata/_custom_type_script = "uid://s5vb5q26sbau"
+
+[node name="Victory" type="NinePatchRect" parent="." unique_id=1533473211]
+visible = false
+custom_minimum_size = Vector2(640, 480)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -340.0
+offset_right = 320.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_qfaxu")
+patch_margin_left = 46
+patch_margin_top = 46
+patch_margin_right = 46
+patch_margin_bottom = 46
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Victory" unique_id=487117249]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Victory/MarginContainer" unique_id=1345778027]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Victory/MarginContainer/VBoxContainer" unique_id=2137200833]
+layout_mode = 2
+text = "YOU ESCAPED!"
+label_settings = SubResource("LabelSettings_tth8g")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Victory/MarginContainer/VBoxContainer" unique_id=903926324]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Control" type="Control" parent="Victory/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1710839959]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Victory" type="Label" parent="Victory/MarginContainer/VBoxContainer/VBoxContainer/Control" unique_id=452376752]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "THE ALIEN KEYS WARPED YOU OUT TO SAFETY!"
+label_settings = SubResource("LabelSettings_s6nlp")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Rotate" type="Node" parent="Victory/MarginContainer/VBoxContainer/VBoxContainer/Control/Victory" unique_id=1163006137 node_paths=PackedStringArray("target")]
+script = ExtResource("14_px8fw")
+run_at_start = true
+initial_value = 0.5
+target = NodePath("..")
+effectors = Array[ExtResource("15_jcjul")]([SubResource("Resource_s6nlp")])
+duration = 1.0
+easing = 2
+transition = 4
+loop = true
+ping_pong = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="Button" type="Button" parent="Victory/MarginContainer/VBoxContainer" unique_id=760636397]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d4ycy")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_sxuoq")
+text = "NEW RUN"
+script = ExtResource("20_88r4d")
+metadata/_custom_type_script = "uid://s5vb5q26sbau"
+
 [node name="GameOver" type="Node" parent="." unique_id=1769523225 node_paths=PackedStringArray("things_to_hide", "gameover_window", "fail_reason")]
 script = ExtResource("17_px8fw")
 things_to_hide = [NodePath("../Control/BottomBarContainer"), NodePath("../HorrorIcon")]
 gameover_window = NodePath("../Lost")
 fail_reason = NodePath("../Lost/MarginContainer/VBoxContainer/VBoxContainer/Control/FailReason")
 metadata/_custom_type_script = "uid://c2glhiqc66w4f"
+
+[node name="ObjectRegistrar" type="Node" parent="." unique_id=1493141173 node_paths=PackedStringArray("object")]
+script = ExtResource("18_jcjul")
+object = NodePath("..")
+registry_name = "ui_layer"
+world = true
+metadata/_custom_type_script = "uid://dvsu4kgpgqnbi"
+
+[node name="Victory2" type="Node" parent="." unique_id=1094275670 node_paths=PackedStringArray("things_to_hide", "victory_window")]
+script = ExtResource("22_s6nlp")
+things_to_hide = [NodePath("../Control/BottomBarContainer"), NodePath("../HorrorIcon")]
+victory_window = NodePath("../Victory")
+metadata/_custom_type_script = "uid://c1cg541lolex3"

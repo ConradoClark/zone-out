@@ -17,10 +17,12 @@ func _on_resource_manager(obj: ResourceManager):
     _adjust_text(resource_manager.get_amount(resource_name), resource_manager.get_max(resource_name))
 
 func _added(res: String, amount: int, total: int):
+    if resource_name != res: return
     _adjust_text(total, resource_manager.get_max(res))
     pass
 
 func _subtracted(res: String, amount: int, total: int):
+    if resource_name != res: return
     _adjust_text(total, resource_manager.get_max(res))
     pass
     

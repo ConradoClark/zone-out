@@ -13,6 +13,7 @@ class_name TweenExecutor
 @export var delay: float
 @export var loop: bool
 @export var ping_pong: bool
+@export var kill_target_on_end: bool
 var current_interpolation: float
 var tween: Tween
 
@@ -57,6 +58,7 @@ func run(target_value: float):
             .set_delay(delay)
     await tween.finished
     if ping_pong: current_interpolation = target_value
+    if kill_target_on_end: target.queue_free()
     
 func run_in():
     await run(1.)

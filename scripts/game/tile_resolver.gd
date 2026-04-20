@@ -22,5 +22,6 @@ func _on_commit(pos: Vector2):
         resolver.set_script(tile.resolver)
         add_child(resolver)
         await resolver.call("resolve")
+    tile_renderer.erase_tile(map_pos)
     game_manager.resolve()
     

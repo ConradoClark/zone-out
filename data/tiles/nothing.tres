@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_rls0n")
 tile_name = "tile_nothing"
+weight = 5.0
 tooltip = "There seems to be nothing peculiar about this spot."
 metadata/_custom_type_script = "uid://c651a1a8nryga"

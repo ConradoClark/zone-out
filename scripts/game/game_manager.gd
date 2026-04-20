@@ -10,6 +10,7 @@ enum State{
     Defeat
 }
 
+var keys_positions: Array[Vector2i] = []
 const registry_key = "game_manager"
 var game_state: State = State.Deciding
 
@@ -24,6 +25,12 @@ var defeat_reason: String = ""
 var has_checked_fuel: bool
 
 func _ready():
+    for i in 2:
+        var direction = randi_range(1,3)
+        match direction:
+            1: keys_positions.append(Vector2i(randi_range(-10,-5), randi_range(5,8)))
+            2: keys_positions.append(Vector2i(randi_range(9, 6), randi_range(3,8)))
+            3: keys_positions.append(Vector2i(randi_range(-5, 5), randi_range(11,10)))
     World.register(registry_key, self)
     on_state_changed.emit(State.Deciding)
     
@@ -35,6 +42,11 @@ func commit_move(target:Vector2i):
     game_state = State.Resolving
     on_state_changed.emit(State.Resolving)
     on_move_committed.emit(target)
+    
+func commit_ability():
+    has_checked_fuel = false
+    game_state = State.Resolving
+    on_state_changed.emit(State.Resolving)
 
 func resolve():
     if game_state != State.Resolving:
@@ -65,15 +77,10 @@ func resolve_horror():
     on_state_changed.emit(game_state)
     
 func win():
-    if game_state != State.Resolving:
-        printerr("Tried to win but was in state '%s'" % game_state)
-        return
+    game_state = State.Victory
     on_state_changed.emit(State.Victory)
 
 func lose(reason: String):
-    if game_state != State.Resolving:
-        printerr("Tried to lose but was in state '%s'" % game_state)
-        return
     defeat_reason = reason
     game_state = State.Defeat
     on_state_changed.emit(State.Defeat)

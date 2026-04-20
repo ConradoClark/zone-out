@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bmr6g786bsc3s"]
+
+[ext_resource type="Texture2D" uid="uid://bhdc6tkuatt77" path="res://textures/sprites/circle.png" id="1_j0rco"]
+[ext_resource type="Script" uid="uid://di4dkxsfw6fxr" path="res://scripts/core/effects/executors/tween_executor.gd" id="2_m4x27"]
+[ext_resource type="Script" uid="uid://dk0guwvvdagde" path="res://scripts/core/effects/effector.gd" id="3_3guq8"]
+[ext_resource type="Script" uid="uid://bncyqf7uw7s0m" path="res://scripts/core/effects/effectors/uniform_scale_effector.gd" id="4_bcid5"]
+[ext_resource type="Script" uid="uid://bmyl4k3kw2h0d" path="res://scripts/core/effects/effectors/visibility_alpha_effector.gd" id="5_etdpx"]
+[ext_resource type="Script" uid="uid://bpmlf3etshayw" path="res://scripts/core/effects/kill_after.gd" id="6_m4x27"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jnuj7"]
+light_mode = 1
+
+[sub_resource type="Resource" id="Resource_r68cs"]
+script = ExtResource("4_bcid5")
+scale_on_one = 80.0
+metadata/_custom_type_script = "uid://bncyqf7uw7s0m"
+
+[sub_resource type="Resource" id="Resource_7q2kj"]
+script = ExtResource("5_etdpx")
+alpha_on_zero = 1.0
+metadata/_custom_type_script = "uid://bmyl4k3kw2h0d"
+
+[node name="RadarEffect" type="Node2D" unique_id=1505851967]
+
+[node name="Circle" type="Sprite2D" parent="." unique_id=153542947]
+modulate = Color(0.69511503, 0.81, 0.5103, 0)
+material = SubResource("CanvasItemMaterial_jnuj7")
+position = Vector2(960, 412)
+texture = ExtResource("1_j0rco")
+
+[node name="TweenExecutor" type="Node" parent="Circle" unique_id=1673049743 node_paths=PackedStringArray("target")]
+script = ExtResource("2_m4x27")
+run_at_start = true
+target = NodePath("..")
+effectors = Array[ExtResource("3_3guq8")]([SubResource("Resource_r68cs"), SubResource("Resource_7q2kj")])
+duration = 1.4
+easing = 1
+transition = 1
+kill_target_on_end = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="Circle2" type="Sprite2D" parent="." unique_id=647120517]
+modulate = Color(0.69511503, 0.81, 0.5103, 0)
+material = SubResource("CanvasItemMaterial_jnuj7")
+position = Vector2(960, 412)
+texture = ExtResource("1_j0rco")
+
+[node name="TweenExecutor" type="Node" parent="Circle2" unique_id=5150612 node_paths=PackedStringArray("target")]
+script = ExtResource("2_m4x27")
+run_at_start = true
+target = NodePath("..")
+effectors = Array[ExtResource("3_3guq8")]([SubResource("Resource_r68cs"), SubResource("Resource_7q2kj")])
+duration = 1.4
+easing = 1
+transition = 1
+delay = 0.5
+kill_target_on_end = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="Circle3" type="Sprite2D" parent="." unique_id=603474871]
+modulate = Color(0.69511503, 0.81, 0.5103, 0)
+material = SubResource("CanvasItemMaterial_jnuj7")
+position = Vector2(960, 412)
+texture = ExtResource("1_j0rco")
+
+[node name="TweenExecutor" type="Node" parent="Circle3" unique_id=394966716 node_paths=PackedStringArray("target")]
+script = ExtResource("2_m4x27")
+run_at_start = true
+target = NodePath("..")
+effectors = Array[ExtResource("3_3guq8")]([SubResource("Resource_r68cs"), SubResource("Resource_7q2kj")])
+duration = 1.4
+easing = 1
+transition = 1
+delay = 1.0
+kill_target_on_end = true
+metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="KillAfter" type="Node" parent="." unique_id=467804385 node_paths=PackedStringArray("reference")]
+script = ExtResource("6_m4x27")
+duration = 2.0
+reference = NodePath("..")
+metadata/_custom_type_script = "uid://bpmlf3etshayw"

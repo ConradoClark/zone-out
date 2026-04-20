@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dpmmjlijiilts"]
+
+[ext_resource type="Texture2D" uid="uid://cxxw7rdmg4chb" path="res://textures/sprites/ability_border.png" id="1_771wn"]
+[ext_resource type="Texture2D" uid="uid://bpte3xmbfhx2d" path="res://textures/sprites/abilities/signal.png" id="2_f455p"]
+
+[node name="AbilityButton" type="Control" unique_id=336035361]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="AbilityBorder" type="TextureRect" parent="." unique_id=1876371330]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_771wn")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="AbilityIcon" type="TextureRect" parent="AbilityBorder" unique_id=1693055060]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_f455p")
+expand_mode = 3
+stretch_mode = 5

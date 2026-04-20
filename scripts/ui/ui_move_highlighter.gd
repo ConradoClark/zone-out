@@ -18,6 +18,7 @@ var _dependencies_loaded: bool = false
 var highlighters: Array[HighlighterWidget] = []
 
 func _ready():
+    World.register("move_highlighter", self)
     World.require(GameManager.registry_key, _on_game_manager)
     World.require("main_camera", World.populate(self, "main_camera"))
     World.require(TileRenderer.registry_key, World.populate(self, "tile_renderer"))
@@ -40,11 +41,14 @@ func calculate_highlighters():
     highlighters.clear()
     for c in get_children():
         c.queue_free()
-    var moves = _calculate_possible_movement()
+    var moves = await _calculate_possible_movement()
     for m in moves:
         _spawn_highlighter(m)
         
 func _spawn_highlighter(pos: Vector2i):
+    while not tile_renderer.current_generator:
+        await get_tree().process_frame
+    await get_tree().process_frame
     var target_grid_pos = astronaut.grid_position + pos
     var highlight = MOVE_HIGHLIGHTER.instantiate() as HighlighterWidget
     var world_pos = tile_renderer.map_2_world(target_grid_pos) - highlighter_half_size
@@ -65,4 +69,32 @@ func _move_intention(obj: HighlighterWidget, pos: Vector2i):
     game_manager.process_move_intention(pos)
     
 func _calculate_possible_movement() -> Array[Vector2i]:
-    return [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
+    while not tile_renderer.has_rendered:
+        await get_tree().process_frame
+    var astronaut_pos = astronaut.grid_position
+    var result: Array[Vector2i] = []
+    if tile_renderer.current_generator.map.has(astronaut_pos + Vector2i.UP):
+        result.append(Vector2i.UP)
+    if tile_renderer.current_generator.map.has(astronaut_pos + Vector2i.DOWN):
+        result.append(Vector2i.DOWN)
+    if tile_renderer.current_generator.map.has(astronaut_pos + Vector2i.LEFT):
+        result.append(Vector2i.LEFT)
+    if tile_renderer.current_generator.map.has(astronaut_pos + Vector2i.RIGHT):
+        result.append(Vector2i.RIGHT)
+    return result
+
+func _enable_barrel_roll():
+    while not tile_renderer.has_rendered:
+        await get_tree().process_frame
+    var astronaut_pos = astronaut.grid_position
+    var result: Array[Vector2i] = []
+    if tile_renderer.current_generator.map.has(astronaut_pos + Vector2i.UP + Vector2i.RIGHT):
+        result.append(Vector2i.UP + Vector2i.RIGHT)
+    if tile_renderer.current_generator.map.has(astronaut_pos + Vector2i.DOWN + Vector2i.RIGHT):
+        result.append(Vector2i.DOWN + Vector2i.RIGHT)
+    if tile_renderer.current_generator.map.has(astronaut_pos  + Vector2i.UP + Vector2i.LEFT):
+        result.append(Vector2i.UP + Vector2i.LEFT)
+    if tile_renderer.current_generator.map.has(astronaut_pos + Vector2i.DOWN + Vector2i.LEFT):
+        result.append(Vector2i.DOWN + Vector2i.LEFT)
+    for m in result:
+        _spawn_highlighter(m)
