@@ -23,6 +23,11 @@ func _ready():
 func _on_game_manager(obj: GameManager):
     game_manager = obj
     game_manager.on_move_committed.connect(_on_move_committed)
+    game_manager.keys_changed.connect(_keys_changed)
+    
+func _keys_changed():
+    if not game_manager.keys_positions.has(grid_pos):
+        queue_free()
     
 func _on_move_committed(_pos: Vector2i):
     _update_marker()

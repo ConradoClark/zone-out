@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dn7452k78kge2" path="res://textures/sprites/red_border.png" id="13_8q8ac"]
 [ext_resource type="Script" uid="uid://di4dkxsfw6fxr" path="res://scripts/core/effects/executors/tween_executor.gd" id="14_px8fw"]
 [ext_resource type="PackedScene" uid="uid://dhic2d63akmeq" path="res://scenes/ui/ability_buttons/barrel_roll.tscn" id="14_sxuoq"]
+[ext_resource type="PackedScene" uid="uid://fnho85oqtvr0" path="res://scenes/ui/ability_buttons/freeze.tscn" id="15_c6av5"]
 [ext_resource type="Script" uid="uid://dk0guwvvdagde" path="res://scripts/core/effects/effector.gd" id="15_jcjul"]
 [ext_resource type="Script" uid="uid://dv1uhigt6d8ao" path="res://scripts/core/effects/effectors/rotation_degrees_effector.gd" id="16_45u8o"]
 [ext_resource type="Script" uid="uid://c2glhiqc66w4f" path="res://scripts/ui/game_over.gd" id="17_px8fw"]
@@ -357,6 +358,9 @@ theme_override_constants/h_separation = 16
 layout_mode = 2
 
 [node name="BarrelRoll" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer2/AbilitiesContainer" unique_id=1728877121 instance=ExtResource("14_sxuoq")]
+layout_mode = 2
+
+[node name="FreezingLight" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer2/AbilitiesContainer" unique_id=685892009 instance=ExtResource("15_c6av5")]
 layout_mode = 2
 
 [node name="Control2" type="Control" parent="Control/BottomBarContainer/VBoxContainer/NinePatchRect/MarginContainer/HBoxContainer" unique_id=477672551]

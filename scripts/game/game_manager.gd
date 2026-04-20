@@ -20,6 +20,7 @@ signal on_move_committed(target: Vector2i)
 signal check_fuel
 signal on_resolve
 signal on_camera_resolve
+signal keys_changed
 
 var defeat_reason: String = ""
 var has_checked_fuel: bool
@@ -58,6 +59,9 @@ func resolve():
         await get_tree().process_frame
     game_state = State.MovingHorror
     on_state_changed.emit(game_state)
+
+func fire_keys_changed():
+    keys_changed.emit()
 
 func fuel_checked(has_fuel: bool):
     if not has_fuel:

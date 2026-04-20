@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://dk0guwvvdagde" path="res://scripts/core/effects/effector.gd" id="15_iguoi"]
 [ext_resource type="Script" uid="uid://vx4cfraa6li4" path="res://scripts/core/effects/effectors/position_effector.gd" id="16_y17gc"]
 [ext_resource type="Script" uid="uid://dv1uhigt6d8ao" path="res://scripts/core/effects/effectors/rotation_degrees_effector.gd" id="17_iguoi"]
+[ext_resource type="Texture2D" uid="uid://cjon7c8g3ogpt" path="res://textures/sprites/horror_light.png" id="19_va8c3"]
 [ext_resource type="Script" uid="uid://b1pkx4syn1vk3" path="res://scripts/game/resource_manager.gd" id="23_2cuu8"]
 [ext_resource type="Script" uid="uid://ddxyay4lq6dtl" path="res://scripts/game/tile_resolver.gd" id="24_va8c3"]
 [ext_resource type="Script" uid="uid://dyrd4jfubvs7d" path="res://scripts/game/ability_resolver.gd" id="25_uevg4"]
@@ -45,6 +46,9 @@ script = ExtResource("17_iguoi")
 rotation_on_zero = -25.0
 rotation_on_one = 25.0
 metadata/_custom_type_script = "uid://dv1uhigt6d8ao"
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uevg4"]
+light_mode = 1
 
 [node name="GameLayer" type="Node2D" unique_id=465470149]
 
@@ -114,8 +118,9 @@ position = Vector2(0, 24)
 texture = ExtResource("1_tinvi")
 
 [node name="PointLight2D" type="PointLight2D" parent="Astronaut/Sprite" unique_id=216843016]
+energy = 1.2
 texture = ExtResource("2_qnsk6")
-texture_scale = 8.0
+texture_scale = 10.0
 
 [node name="Floating" type="Node" parent="Astronaut" unique_id=1212547616 node_paths=PackedStringArray("target")]
 script = ExtResource("14_y17gc")
@@ -140,6 +145,21 @@ transition = 1
 loop = true
 ping_pong = true
 metadata/_custom_type_script = "uid://di4dkxsfw6fxr"
+
+[node name="HorrorLight" type="Node2D" parent="." unique_id=370834700]
+position = Vector2(2827, -2269)
+
+[node name="ObjectRegistrar" type="Node" parent="HorrorLight" unique_id=1286947840 node_paths=PackedStringArray("object")]
+script = ExtResource("4_ng082")
+object = NodePath("..")
+registry_name = "horror_light"
+world = true
+metadata/_custom_type_script = "uid://dvsu4kgpgqnbi"
+
+[node name="Sprite2D" type="Sprite2D" parent="HorrorLight" unique_id=1357521213]
+material = SubResource("CanvasItemMaterial_uevg4")
+scale = Vector2(7.2, 7.2)
+texture = ExtResource("19_va8c3")
 
 [node name="EffectLayer" type="CanvasLayer" parent="." unique_id=280486581]
 

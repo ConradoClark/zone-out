@@ -6,25 +6,32 @@ class_name Horror
 @export var icon_control: Control
 @export var pointer: Control
 @export var description_label: Label
+
 var game_manager: GameManager
 var astronaut: Astronaut
+var tile_renderer: TileRenderer
+var horror_light: Node2D
 var horror_state: State
 var default_speed: int = 1
 var looking_factor: int = 10
 var detected_factor: int = 10
+var freezing_factor: int = 0
 const registry_key = "horror"
 
 enum State{
     LookingForYou,
     ChasingYou,
     ClosingIn,
-    ImminentAttack
+    ImminentAttack,
+    FreezingLight
 }
 
 func _ready():
     World.register(registry_key, self)
     World.require(GameManager.registry_key, _on_game_manager)
     World.require(Astronaut.registry_key, World.populate(self, "astronaut"))
+    World.require("horror_light", World.populate(self, "horror_light"))
+    World.require("tile_renderer", World.populate(self, "tile_renderer"))
     _update_marker()
     
 func _print_position():
@@ -52,6 +59,10 @@ func move():
         State.ClosingIn: _looking_for_you()
         State.ImminentAttack: _chasing_you()
     var distance = (grid_pos - astronaut.grid_position).length()
+    if horror_state == State.FreezingLight:
+        freezing_factor-=1
+        if freezing_factor == 0:
+            horror_state = State.LookingForYou
     if distance > 8 and horror_state == State.ChasingYou:
         detected_factor -= randi_range(1,2)
         if detected_factor <=0:
@@ -141,6 +152,7 @@ func _update_marker():
     _print_position()
     var astronaut_pos = Vector2(astronaut.grid_position)
     var horror_pos = Vector2(grid_pos)
+    horror_light.global_position = tile_renderer.map_2_world(grid_pos)
     const center = Vector2(960,540-122)
     const radius = 300
     var distance = astronaut_pos - horror_pos
@@ -154,6 +166,12 @@ func _update_marker():
         State.ChasingYou: description_label.text = "Chasing You"
         State.ClosingIn: description_label.text = "Closing In..."
         State.ImminentAttack: description_label.text = "You'll soon be mine"
+        State.FreezingLight: description_label.text = "It stopped on its tracks"
+    
+func freeze_horror():
+    freezing_factor = 3
+    horror_state = State.FreezingLight
+    _update_marker()
     
 func detect_astronaut():
     detected_factor = 4

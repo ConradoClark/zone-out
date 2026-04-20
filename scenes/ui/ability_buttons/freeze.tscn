@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://fnho85oqtvr0"]
+
+[ext_resource type="Texture2D" uid="uid://cxxw7rdmg4chb" path="res://textures/sprites/ability_border.png" id="1_o1d1u"]
+[ext_resource type="Texture2D" uid="uid://bixnl4h2wljfd" path="res://textures/sprites/abilities/freezing_light.png" id="2_o1d1u"]
+[ext_resource type="Script" uid="uid://bagc6alfjf4wq" path="res://scripts/ui/hover_tooltip.gd" id="3_g31ed"]
+[ext_resource type="Script" uid="uid://bbalwl2ujskyg" path="res://scripts/ui/ui_ability_button.gd" id="4_ra0p6"]
+[ext_resource type="Script" uid="uid://csadthclo7w6l" path="res://scripts/game/abilities/freeze_horror.gd" id="5_o1d1u"]
+
+[node name="FreezingLight" type="Control" unique_id=336035361]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="AbilityBorder" type="TextureRect" parent="." unique_id=1876371330]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_o1d1u")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="AbilityIcon" type="TextureRect" parent="AbilityBorder" unique_id=1693055060]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_o1d1u")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="HoverTooltip" type="Node" parent="." unique_id=1323464642 node_paths=PackedStringArray("control")]
+script = ExtResource("3_g31ed")
+tooltip = "FREEZING LIGHT - Spend 15 energy to stop the horror for 3 turns"
+control = NodePath("..")
+metadata/_custom_type_script = "uid://bagc6alfjf4wq"
+
+[node name="UIAbilityButton" type="Node" parent="." unique_id=1025562575 node_paths=PackedStringArray("control", "border", "image", "tooltip")]
+script = ExtResource("4_ra0p6")
+ability_function = ExtResource("5_o1d1u")
+control = NodePath("..")
+border = NodePath("../AbilityBorder")
+image = NodePath("../AbilityBorder/AbilityIcon")
+cooldown = 1
+tooltip = NodePath("../HoverTooltip")
+cost = Dictionary[String, int]({
+"energy": 15
+})
+metadata/_custom_type_script = "uid://bbalwl2ujskyg"
