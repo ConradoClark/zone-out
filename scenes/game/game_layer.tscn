@@ -60,12 +60,12 @@ color = Color(0.019607844, 0.007843138, 0.039215688, 1)
 
 [node name="BGLight" type="PointLight2D" parent="BGLayer" unique_id=1174729864]
 position = Vector2(960, 444)
-color = Color(1, 0.6, 1, 1)
-energy = 2.0
+color = Color(0.89825827, 0.7465706, 0.9705543, 1)
+energy = 3.0
 range_layer_min = -1
 range_layer_max = -1
 texture = ExtResource("2_qnsk6")
-texture_scale = 8.0
+texture_scale = 12.0
 
 [node name="CheckeredBG" type="Sprite2D" parent="BGLayer" unique_id=590837409]
 texture_filter = 1
@@ -118,9 +118,9 @@ position = Vector2(0, 24)
 texture = ExtResource("1_tinvi")
 
 [node name="PointLight2D" type="PointLight2D" parent="Astronaut/Sprite" unique_id=216843016]
-energy = 1.2
+energy = 1.5
 texture = ExtResource("2_qnsk6")
-texture_scale = 10.0
+texture_scale = 12.0
 
 [node name="Floating" type="Node" parent="Astronaut" unique_id=1212547616 node_paths=PackedStringArray("target")]
 script = ExtResource("14_y17gc")
